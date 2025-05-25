@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>londri.in - Layanan Laundry Terbaik</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF',
+                        secondary: '#3B82F6',
+                        light: '#EFF6FF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'custom': '0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(to right, #1E40AF, #3B82F6);
+        }
+
+        .pagination-btn {
+            transition: all 0.3s ease;
+        }
+
+        .pagination-btn.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+
+        .pagination-btn:hover:not(.active):not(.disabled) {
+            background-color: #EFF6FF;
+        }
+
+        .pagination-btn.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body class="bg-light min-h-screen font-sans">
+    <?php
+    include('includes/navbar.php');
+    ?>
+
+    <!-- Hero Section -->
+    <div class="gradient-bg text-white py-16 mb-10">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Temukan Layanan Laundry Terdekat</h1>
+                <p class="text-lg md:text-xl opacity-90 mb-8">Jelajahi layanan laundry terbaik di sekitar Unnes dengan londri.in</p>
+                <div class="flex justify-center">
+                    <div class="relative w-full max-w-xl">
+                        <input type="text" id="search-input" placeholder="Cari berdasarkan lokasi atau nama..." 
+                            class="w-full py-3 px-5 pr-12 rounded-full focus:outline-none focus:ring-2 focus:ring-secondary text-gray-700">
+                        <button class="absolute right-4 top-1/2 transform -translate-y-1/2 text-secondary">
+                            <i class="fas fa-search text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-bold text-primary">Lokasi Laundry</h2>
+            <div class="text-gray-600">
+                <span id="showing-text">Menampilkan hasil</span>
+            </div>
+        </div>
+        
+        <div id="services-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Services will be loaded here from data.json -->
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination-container" class="flex justify-center mt-12 flex-wrap">
+            <!-- Pagination will be generated here -->
+        </div>
+    </main>
+
+    <!-- Features Section -->
+    <section class="bg-white py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center text-primary mb-12">Mengapa Memilih londri.in</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 rounded-xl shadow-custom">
+                    <div class="inline-block p-4 rounded-full bg-light mb-4">
+                        <i class="fas fa-map-marker-alt text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Pencarian Lokasi Mudah</h3>
+                    <p class="text-gray-600">Temukan layanan laundry di sekitar Anda dengan cepat menggunakan pencarian kami.</p>
+                </div>
+                <div class="text-center p-6 rounded-xl shadow-custom">
+                    <div class="inline-block p-4 rounded-full bg-light mb-4">
+                        <i class="fas fa-tshirt text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Layanan Berkualitas</h3>
+                    <p class="text-gray-600">Layanan laundry terverifikasi yang memastikan pakaian Anda dirawat dengan baik.</p>
+                </div>
+                <div class="text-center p-6 rounded-xl shadow-custom">
+                    <div class="inline-block p-4 rounded-full bg-light mb-4">
+                        <i class="fas fa-phone-alt text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Kontak Langsung</h3>
+                    <p class="text-gray-600">Hubungi langsung penyedia layanan untuk permintaan khusus atau pertanyaan.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <?php
+    include('includes/footer.php');
+    ?>
+
+    <script>
+        // Pagination variables
+        const itemsPerPage = 6;
+        let currentPage = 1;
+        let totalPages = 1;
+        
+        // Search functionality
+        const searchInput = document.getElementById('search-input');
+        searchInput.addEventListener('input', function() {
+            currentPage = 1;
+            filterAndDisplay();
+        });
+        
+        let laundryData = [];
+        let filteredData = [];
+        
+        // Fetch and display services from data.json
+        fetch('data/data.json')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Filter out invalid entries (those without id or name)
+                laundryData = data.filter(item => item.id && item.nama);
+                filteredData = [...laundryData];
+                totalPages = Math.ceil(filteredData.length / itemsPerPage);
+                displayLaundries();
+                updatePagination();
+            })
+            .catch(error => {
+                console.error('Error loading data:', error);
+                document.getElementById('services-container').innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="inline-block p-4 rounded-full bg-red-100 mb-4">
+                            <i class="fas fa-exclamation-triangle text-2xl text-red-500"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Oops! Terjadi kesalahan</h3>
+                        <p class="text-gray-600 mb-4">Gagal memuat lokasi laundry. Silakan coba lagi nanti.</p>
+                        <p class="text-gray-500 mt-2">Error: ${error.message}</p>
+                        <button onclick="location.reload()" class="mt-4 bg-secondary text-white px-6 py-2 rounded-full hover:bg-primary transition">
+                            <i class="fas fa-redo mr-2"></i> Coba Lagi
+                        </button>
+                    </div>
+                `;
+                document.getElementById('pagination-container').innerHTML = '';
+                document.getElementById('showing-text').textContent = '';
+            });
+            
+        function filterAndDisplay() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            
+            if (searchTerm === '') {
+                filteredData = [...laundryData];
+            } else {
+                filteredData = laundryData.filter(laundry => {
+                    return laundry.nama.toLowerCase().includes(searchTerm) || 
+                        (laundry.alamat && laundry.alamat.toLowerCase().includes(searchTerm));
+                });
+            }
+            
+            totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            
+            // If current page is now beyond total pages, reset to page 1
+            if (currentPage > totalPages) {
+                currentPage = 1;
+            }
+            
+            displayLaundries();
+            updatePagination();
+        }
+            
+        function displayLaundries() {
+            const servicesContainer = document.getElementById('services-container');
+            servicesContainer.innerHTML = '';
+            
+            if (filteredData.length === 0) {
+                servicesContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <div class="inline-block p-4 rounded-full bg-gray-100 mb-4">
+                            <i class="fas fa-search text-2xl text-gray-400"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-2">Hasil tidak ditemukan</h3>
+                        <p class="text-gray-600">Coba ubah kata kunci pencarian Anda</p>
+                    </div>
+                `;
+                document.getElementById('pagination-container').innerHTML = '';
+                document.getElementById('showing-text').textContent = '0 hasil';
+                return;
+            }
+            
+            // Calculate start and end indices for current page
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = Math.min(startIndex + itemsPerPage, filteredData.length);
+            const currentItems = filteredData.slice(startIndex, endIndex);
+            
+            // Update showing text
+            document.getElementById('showing-text').textContent = 
+                `Menampilkan ${startIndex + 1}-${endIndex} dari ${filteredData.length} hasil`;
+            
+            currentItems.forEach(laundry => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-custom overflow-hidden card-hover';
+                
+                card.innerHTML = `
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h2 class="text-xl font-semibold text-primary truncate w-4/5">${laundry.nama}</h2>
+                            <div class="bg-light p-2 rounded-full">
+                                <i class="fas fa-tshirt text-secondary"></i>
+                            </div>
+                        </div>
+                        <div class="mb-5">
+                            <div class="flex items-start mb-2">
+                                <i class="fas fa-map-marker-alt text-secondary mt-1 mr-2"></i>
+                                <p class="text-gray-600 line-clamp-2">${laundry.alamat ? laundry.alamat.substring(0, 100) + '...' : 'Alamat tidak tersedia'}</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-phone text-secondary mr-2"></i>
+                                <span class="text-gray-600">${laundry.no_telp || 'Nomor telepon tidak tersedia'}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between pt-4 border-t border-gray-100">
+                            ${laundry.link_gmaps ? 
+                                `<a href="${laundry.link_gmaps}" target="_blank" class="text-secondary hover:text-primary transition flex items-center">
+                                    <i class="fas fa-map-marked-alt mr-1"></i> Peta
+                                </a>` : 
+                                `<span class="text-gray-400">
+                                    <i class="fas fa-map-marked-alt mr-1"></i> Peta tidak tersedia
+                                </span>`
+                            }
+                            <a href="detail.php?id=${laundry.id}" class="bg-secondary text-white px-5 py-2 rounded-full hover:bg-primary transition">
+                                Lihat Detail
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                servicesContainer.appendChild(card);
+            });
+        }
+        
+        function updatePagination() {
+            const paginationContainer = document.getElementById('pagination-container');
+            paginationContainer.innerHTML = '';
+            
+            if (filteredData.length === 0) return;
+            
+            // Previous button
+            const prevBtn = document.createElement('button');
+            prevBtn.className = `pagination-btn mx-1 px-4 py-2 rounded-md border ${currentPage === 1 ? 'disabled' : ''}`;
+            prevBtn.innerHTML = '<i class="fas fa-chevron-left"></i>';
+            prevBtn.disabled = currentPage === 1;
+            prevBtn.addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    displayLaundries();
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+            paginationContainer.appendChild(prevBtn);
+            
+            // Determine page range to show
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            
+            // Adjust if we're near the end
+            if (endPage - startPage < 4 && startPage > 1) {
+                startPage = Math.max(1, endPage - 4);
+            }
+            
+            // First page (if not in range)
+            if (startPage > 1) {
+                const firstBtn = document.createElement('button');
+                firstBtn.className = 'pagination-btn mx-1 px-4 py-2 rounded-md border';
+                firstBtn.textContent = '1';
+                firstBtn.addEventListener('click', () => {
+                    currentPage = 1;
+                    displayLaundries();
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                paginationContainer.appendChild(firstBtn);
+                
+                if (startPage > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'mx-1 px-3 py-2';
+                    ellipsis.textContent = '...';
+                    paginationContainer.appendChild(ellipsis);
+                }
+            }
+            
+            // Page numbers
+            for (let i = startPage; i <= endPage; i++) {
+                const pageBtn = document.createElement('button');
+                pageBtn.className = `pagination-btn mx-1 px-4 py-2 rounded-md border ${i === currentPage ? 'active' : ''}`;
+                pageBtn.textContent = i;
+                pageBtn.addEventListener('click', () => {
+                    currentPage = i;
+                    displayLaundries();
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                paginationContainer.appendChild(pageBtn);
+            }
+            
+            // Last page (if not in range)
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'mx-1 px-3 py-2';
+                    ellipsis.textContent = '...';
+                    paginationContainer.appendChild(ellipsis);
+                }
+                
+                const lastBtn = document.createElement('button');
+                lastBtn.className = 'pagination-btn mx-1 px-4 py-2 rounded-md border';
+                lastBtn.textContent = totalPages;
+                lastBtn.addEventListener('click', () => {
+                    currentPage = totalPages;
+                    displayLaundries();
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+                paginationContainer.appendChild(lastBtn);
+            }
+            
+            // Next button
+            const nextBtn = document.createElement('button');
+            nextBtn.className = `pagination-btn mx-1 px-4 py-2 rounded-md border ${currentPage === totalPages ? 'disabled' : ''}`;
+            nextBtn.innerHTML = '<i class="fas fa-chevron-right"></i>';
+            nextBtn.disabled = currentPage === totalPages;
+            nextBtn.addEventListener('click', () => {
+                if (currentPage < totalPages) {
+                    currentPage++;
+                    displayLaundries();
+                    updatePagination();
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+            paginationContainer.appendChild(nextBtn);
+        }
+    </script>
+</body>
+</html>

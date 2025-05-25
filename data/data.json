@@ -1,0 +1,191 @@
+[
+  {
+    "id": 1,
+    "nama": "Laundry Room UNNES",
+    "link_gmaps": "https://maps.app.goo.gl/EcbLKhcC6J4b2oiF6?g_st=com.google.maps.preview.copy",
+    "alamat": "Jl. Pete Raya No.04, RT.05/RW.1, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285741352710"
+  },
+  {
+    "id": 2,
+    "nama": "Sabila Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/8XB15uQyt971eA3J7?g_st=com.google.maps.preview.copy",
+    "alamat": "Jl. Taman Siswa Jl. Sekaran Raya No.13, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6282223577889"
+  },
+  {
+    "id": 3,
+    "nama": "Speedy Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/hNpvLs6NgnufE6ob7?g_st=com.google.maps.preview.copy",
+    "alamat": "Jl. Mr. Koesbiyono Tjondrowibowo No.13, RT.03/RW.04, Patemon, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6285600593955"
+  },
+  {
+    "id": 4,
+    "nama": "Luthfia Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/WCPeqQVHqFo5gpZY9?g_st=com.google.maps.preview.copy",
+    "alamat": "W9WW+2VH, Gg. Jeruk, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": null
+  },
+  {
+    "id": 5,
+    "nama": "D’Laundry Adem Ayem",
+    "link_gmaps": "https://maps.app.goo.gl/y26ZEztkBcThnMZr5?g_st=com.google.maps.preview.copy",
+    "alamat": "Gg. Pete Sel. I No.02, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": null
+  },
+  {
+    "id": 6,
+    "nama": "Laundry \"O\"",
+    "link_gmaps": "https://maps.app.goo.gl/HWcB1WdYckVNF6aLA",
+    "alamat": "Gg. Cemp. Sari No.41, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6281390262458"
+  },
+  {
+    "id": 7,
+    "nama": "Albarokah Laundry 2",
+    "link_gmaps": "https://maps.app.goo.gl/LGjuX6wPvD4X5BEs9",
+    "alamat": "Gg. Cemp. Sari, RT.22/RW.02, Sekaran, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285819888955"
+  },
+  {
+    "id": 8,
+    "nama": "JK Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/udnsbw3ochVtuVDUA",
+    "alamat": "jl. cempaka sari No.22c Rt.01/01, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6282242079974"
+  },
+  {
+    "id": 9,
+    "nama": "Ozora Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/GwyQmScZoUVnDRZk7",
+    "alamat": "Gg. Cemp. Sari No.12, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6281327350320"
+  },
+  {
+    "id": 10,
+    "nama": "Dita Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/Us5zLHy78BtSvYgM7",
+    "alamat": "W9VX+WPM, Jl. Cemp., Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6283195025827"
+  },
+  {
+    "id": 11,
+    "nama": "Berkah Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/ajp82rdrJCmchtKg8?g_st=ac",
+    "alamat": "Jl. Raya Banaran No.14, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285876265117"
+  },
+  {
+    "id": 12,
+    "nama": "NN Laundry UNNES",
+    "link_gmaps": "https://maps.app.goo.gl/vosBU2jzvCF5kjra7?g_st=ac",
+    "alamat": "W9XW+H4W, Jl. Taman Siswa, Lapangan Jl. Raya Banaran No.Depan, Sekaran, Gunung Pati, Semarang City, Central Java 50229",
+    "no_telp": "+6285864080489"
+  },
+  {
+    "id": 13,
+    "nama": "Gendut Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/omZHzSWTjt3gyBz49?g_st=ac",
+    "alamat": "Jl. Taman Siswa Jl. Raya Banaran No.53, RT.02/RW.05, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6282328289494"
+  },
+  {
+    "id": 14,
+    "nama": "LAJU Laundry Antar Jemput",
+    "link_gmaps": "https://maps.app.goo.gl/oKspEcE6wVDbzYRn7?g_st=ac",
+    "alamat": "X94V+4CG, Jl. Marga Satwa Jl. Raya Banaran, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285799992053"
+  },
+  {
+    "id": 15,
+    "nama": "Griya Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/5qcovczRiGjZsCRC6?g_st=ac",
+    "alamat": "Jalan raya banaran no.4 d rt 5 rw 4, Sekaran, Gunungpati, Jl. Raya Banaran No.4d, RT.5/RW.4, Banaran, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285712474881"
+  },
+  {
+    "id": 16,
+    "nama": "Khusna laundry",
+    "link_gmaps": "https://maps.app.goo.gl/12j7iUkBypA9EjFd7",
+    "alamat": "X93X+R77, Jl. Kalimasada IV, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6282336900429"
+  },
+  {
+    "id": 17,
+    "nama": "SAIN LAUNDRY 2",
+    "link_gmaps": "https://maps.app.goo.gl/EouutovURAaTT5iN8",
+    "alamat": "Jl. Taman Siswa No.67, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6289516518500"
+  },
+  {
+    "id": 18,
+    "nama": "Laundry Banyu Mili",
+    "link_gmaps": "https://maps.app.goo.gl/nRmfgeypnvUMiVCx5",
+    "alamat": "Gg. Kalimasada I No.4, RT.04/RW.05, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": null
+  },
+  {
+    "id": 19,
+    "nama": "Lia Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/CxxiTpFs6HabSaiJ8?g_st=ac",
+    "alamat": "Sekaran, Gunung Pati, Semarang City, Central Java",
+    "no_telp": null
+  },
+  {
+    "id": 20,
+    "nama": "Nakula Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/zrHYBYR8viETqPKJA",
+    "alamat": "Jl. Marga Satwa Gg. Nakula No.8, Sekaran, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6285865401447"
+  },
+  {
+    "id": 21,
+    "nama": "MAKWASH",
+    "link_gmaps": "https://maps.app.goo.gl/cTbfQQ9zPd9pcLWq5",
+    "alamat": "Jl. AmpeL Gading Tim. II, Kalisegoro, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6285875216585"
+  },
+  {
+    "id": 22,
+    "nama": "BUNDA LAUNDRY 3",
+    "link_gmaps": "https://maps.app.goo.gl/XqNnEBSDFTNbPNkD7",
+    "alamat": "unnes 100m dari rusunawa putri unnes, Jl. Ampel Gading Raya, Kalisegoro, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6285871157945"
+  },
+  {
+    "id": 23,
+    "nama": "Ozora Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/34tM8stQHuEtCHuKA",
+    "alamat": "Jl. Citra Gading 4 No.4, Ngijo, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6281327350320"
+  },
+  {
+    "id": 24,
+    "nama": "Resik Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/LXF3d6ymd6nFiRKh8",
+    "alamat": "Dk, Jl. Jetis, Ngijo, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50229",
+    "no_telp": "+6281391080897"
+  },
+  {
+    "id": 25,
+    "nama": "Fani Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/75dJTpbNbE3rBfSW9",
+    "alamat": "Depan lapangan bola dan voly, Rumah panjang Cat ungu muda, Jl. Perum Mangunsari Asri No.002, RT.001, Ngijo, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6285712929416"
+  },
+  {
+    "id": 26,
+    "nama": "Super Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/pBBSUfXsajhnnkYN8",
+    "alamat": "Jl. Raya Ngijo No.13 rt 04/01, Ngijo, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50228",
+    "no_telp": "+6285865490942"
+  },
+  {
+    "id": 27,
+    "nama": "Yufa Laundry",
+    "link_gmaps": "https://maps.app.goo.gl/5izt1PMYMjNcfSGK9",
+    "alamat": "W9GP+4RV, Jl. Raya Muntal, Ngijo, Kec. Gn. Pati, Kota Semarang, Jawa Tengah 50227",
+    "no_telp": null
+  }
+]

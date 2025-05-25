@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detail Laundry - londry.in</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E40AF',
+                        secondary: '#3B82F6',
+                        light: '#EFF6FF',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        'custom': '0 10px 15px -3px rgba(59, 130, 246, 0.1), 0 4px 6px -2px rgba(59, 130, 246, 0.05)',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        .gradient-bg {
+            background: linear-gradient(to right, #1E40AF, #3B82F6);
+        }
+    </style>
+</head>
+<body class="bg-light min-h-screen font-sans">
+    <!-- Header -->
+    <?php
+    include('includes/navbar.php');
+    ?>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <a href="index.php" class="inline-flex items-center text-primary mb-6 hover:text-secondary transition">
+            <i class="fas fa-arrow-left mr-2"></i>
+            Kembali ke Daftar
+        </a>
+        
+        <div id="laundry-details" class="bg-white rounded-xl shadow-custom p-8 mt-4">
+            <!-- Loading state -->
+            <div class="animate-pulse">
+                <div class="h-8 bg-blue-100 rounded w-1/3 mb-6"></div>
+                <div class="h-4 bg-blue-100 rounded mb-4 w-2/3"></div>
+                <div class="h-4 bg-blue-100 rounded mb-4"></div>
+                <div class="h-4 bg-blue-100 rounded mb-4 w-5/6"></div>
+                <div class="h-10 bg-blue-100 rounded w-1/4 mt-8"></div>
+            </div>
+        </div>
+        
+        <!-- Similar Locations -->
+        <div id="similar-locations" class="mt-12">
+            <h2 class="text-2xl font-bold text-primary mb-6">Lokasi Serupa di Sekitar</h2>
+            <div id="similar-container" class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Similar locations will be loaded here -->
+                <div class="animate-pulse bg-white rounded-xl shadow-md p-6">
+                    <div class="h-6 bg-blue-100 rounded w-3/4 mb-4"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3 w-5/6"></div>
+                    <div class="h-8 bg-blue-100 rounded w-1/3 mt-4"></div>
+                </div>
+                <div class="animate-pulse bg-white rounded-xl shadow-md p-6">
+                    <div class="h-6 bg-blue-100 rounded w-2/3 mb-4"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3 w-5/6"></div>
+                    <div class="h-8 bg-blue-100 rounded w-1/3 mt-4"></div>
+                </div>
+                <div class="animate-pulse bg-white rounded-xl shadow-md p-6">
+                    <div class="h-6 bg-blue-100 rounded w-1/2 mb-4"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3"></div>
+                    <div class="h-4 bg-blue-100 rounded mb-3 w-5/6"></div>
+                    <div class="h-8 bg-blue-100 rounded w-1/3 mt-4"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <?php
+    include('includes/footer.php');
+    ?>
+
+    <script>
+        // Get laundry ID from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const laundryId = urlParams.get('id');
+        
+        let allLaundries = [];
+        
+        if (!laundryId) {
+            document.getElementById('laundry-details').innerHTML = `
+                <div class="text-center py-12">
+                    <div class="inline-block p-5 rounded-full bg-red-100 mb-6">
+                        <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+                    </div>
+                    <h2 class="text-2xl font-bold text-primary mb-4">Kesalahan</h2>
+                    <p class="text-gray-600 mb-6">ID laundry tidak ditemukan.</p>
+                    <a href="index.php" class="inline-block mt-6 bg-secondary text-white px-8 py-3 rounded-full hover:bg-primary transition">
+                        <i class="fas fa-home mr-2"></i> Kembali ke Beranda
+                    </a>
+                </div>
+            `;
+            document.getElementById('similar-locations').classList.add('hidden');
+        } else {
+            // Fetch laundry details from data.json
+            fetch('data/data.json')
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    allLaundries = data;
+                    const laundry = data.find(item => item.id.toString() === laundryId);
+                    
+                    if (!laundry) {
+                        document.getElementById('laundry-details').innerHTML = `
+                            <div class="text-center py-12">
+                                <div class="inline-block p-5 rounded-full bg-red-100 mb-6">
+                                    <i class="fas fa-search text-3xl text-red-500"></i>
+                                </div>
+                                <h2 class="text-2xl font-bold text-primary mb-4">Laundry Tidak Ditemukan</h2>
+                                <p class="text-gray-600 mb-6">Lokasi laundry yang Anda cari tidak tersedia.</p>
+                                <a href="index.php" class="inline-block mt-6 bg-secondary text-white px-8 py-3 rounded-full hover:bg-primary transition">
+                                    <i class="fas fa-home mr-2"></i> Kembali ke Beranda
+                                </a>
+                            </div>
+                        `;
+                        document.getElementById('similar-locations').classList.add('hidden');
+                        return;
+                    }
+                    
+                    document.title = `${laundry.nama} - londry.in`;
+                    
+                    document.getElementById('laundry-details').innerHTML = `
+                        <div class="mb-6 flex justify-between items-start">
+                            <div>
+                                <h1 class="text-3xl font-bold text-primary mb-2">${laundry.nama}</h1>
+                                <div class="flex items-center text-gray-600">
+                                    <i class="fas fa-map-marker-alt text-secondary mr-2"></i>
+                                    <span>Layanan Laundry</span>
+                                </div>
+                            </div>
+                            <div class="bg-light p-4 rounded-full">
+                                <i class="fas fa-tshirt text-3xl text-secondary"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+                            <div>
+                                <div class="mb-6">
+                                    <h2 class="text-xl font-semibold text-gray-700 mb-3">Alamat</h2>
+                                    <div class="bg-light p-4 rounded-lg">
+                                        <p class="text-gray-600">${laundry.alamat}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <div class="bg-light p-6 rounded-lg">
+                                    <h2 class="text-xl font-semibold text-gray-700 mb-4">Informasi Kontak</h2>
+                                    ${laundry.no_telp ? 
+                                        `<a href="tel:${laundry.no_telp}" class="flex items-center text-primary hover:text-secondary transition mb-4">
+                                            <div class="bg-blue-100 p-3 rounded-full mr-4">
+                                                <i class="fas fa-phone text-secondary"></i>
+                                            </div>
+                                            <span class="text-lg">${laundry.no_telp}</span>
+                                        </a>` : 
+                                        `<div class="flex items-center text-gray-400 mb-4">
+                                            <div class="bg-gray-100 p-3 rounded-full mr-4">
+                                                <i class="fas fa-phone"></i>
+                                            </div>
+                                            <span class="text-lg">Nomor telepon tidak tersedia</span>
+                                        </div>`
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8 flex flex-wrap gap-4">
+                            ${laundry.link_gmaps ? 
+                                `<a href="${laundry.link_gmaps}" target="_blank" class="bg-secondary text-white px-6 py-3 rounded-lg hover:bg-primary transition flex items-center">
+                                    <i class="fas fa-map-marked-alt mr-2"></i>
+                                    Buka di Google Maps
+                                </a>` : ''
+                            }
+                            ${laundry.no_telp ? 
+                                `<a href="https://wa.me/${laundry.no_telp.replace(/\s+/g, '')}" target="_blank" class="bg-primary text-white px-6 py-3 rounded-lg hover:bg-secondary transition flex items-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    Chat di WhatsApp
+                                </a>` : 
+                                `<span class="bg-gray-400 text-white px-6 py-3 rounded-lg cursor-not-allowed flex items-center">
+                                    <i class="fab fa-whatsapp mr-2"></i>
+                                    Tidak ada nomor WhatsApp
+                                </span>`
+                            }
+                            <a href="index.php" class="bg-white text-primary border border-primary px-6 py-3 rounded-lg hover:bg-light transition flex items-center">
+                                <i class="fas fa-list mr-2"></i>
+                                Lihat Lokasi Lain
+                            </a>
+                        </div>
+                    `;
+                    
+                    // Load similar locations
+                    loadSimilarLocations(laundry, allLaundries);
+                })
+                .catch(error => {
+                    console.error('Error loading data:', error);
+                    document.getElementById('laundry-details').innerHTML = `
+                        <div class="text-center py-12">
+                            <div class="inline-block p-5 rounded-full bg-red-100 mb-6">
+                                <i class="fas fa-exclamation-triangle text-3xl text-red-500"></i>
+                            </div>
+                            <h2 class="text-2xl font-bold text-primary mb-4">Kesalahan</h2>
+                            <p class="text-gray-600 mb-6">Gagal memuat detail laundry. Silakan coba lagi nanti.</p>
+                            <p class="text-gray-500 mt-2 mb-6">Error: ${error.message}</p>
+                            <a href="index.php" class="inline-block bg-secondary text-white px-8 py-3 rounded-full hover:bg-primary transition">
+                                <i class="fas fa-home mr-2"></i> Kembali ke Beranda
+                            </a>
+                        </div>
+                    `;
+                    document.getElementById('similar-locations').classList.add('hidden');
+                });
+        }
+        
+        function loadSimilarLocations(currentLaundry, allLaundries) {
+            // Filter out current laundry and get 3 random ones
+            const otherLaundries = allLaundries
+                .filter(laundry => laundry.id !== currentLaundry.id && laundry.id && laundry.nama)
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 3);
+            
+            if (otherLaundries.length === 0) {
+                document.getElementById('similar-locations').classList.add('hidden');
+                return;
+            }
+            
+            const similarContainer = document.getElementById('similar-container');
+            similarContainer.innerHTML = '';
+            
+            otherLaundries.forEach(laundry => {
+                const card = document.createElement('div');
+                card.className = 'bg-white rounded-xl shadow-custom overflow-hidden transition transform hover:scale-105 hover:shadow-lg';
+                
+                card.innerHTML = `
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold text-primary mb-2">${laundry.nama}</h3>
+                        <p class="text-gray-600 mb-4 line-clamp-2">${laundry.alamat ? laundry.alamat.substring(0, 80) + '...' : 'Alamat tidak tersedia'}</p>
+                        <a href="detail.php?id=${laundry.id}" class="text-secondary hover:text-primary transition font-medium flex items-center">
+                            Lihat Detail
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                `;
+                
+                similarContainer.appendChild(card);
+            });
+        }
+    </script>
+</body>
+</html>
